@@ -1,0 +1,27 @@
+const lessons={
+mamnoo:{title:"الممنوع من الصرف",body:`<p><b>الفكرة الأساسية:</b> الممنوع من الصرف اسم لا يقبل التنوين، ويُجرّ بالفتحة بدلًا من الكسرة إذا كان مجردًا من «أل» والإضافة.</p><h3>مثال</h3><div class="examplebox">جاءَ <b>أحمدُ</b>، رأيتُ <b>أحمدَ</b>، مررتُ بـ<b>أحمدَ</b>.</div><p>«أحمد» علم على وزن الفعل، لذلك لا يُنوَّن ويُجرّ بالفتحة.</p><h3>متى يُجرّ بالكسرة؟</h3><p>إذا دخلت عليه «أل» أو أُضيف: صلّيتُ في <b>المساجدِ</b>، وصلّيتُ في <b>مساجدِ المدينةِ</b>.</p><ul><li>لا تنوين في الاسم الممنوع من الصرف.</li><li>يُجرّ بالفتحة نيابة عن الكسرة.</li><li>مع «أل» أو الإضافة يُجرّ بالكسرة.</li></ul>`},
+five:{title:"الأسماء الخمسة",body:`<p>الأسماء الخمسة هي: أب، أخ، حم، فو، ذو (بمعنى صاحب).</p><h3>علامات إعرابها</h3><div class="examplebox">جاء <b>أبوك</b> (الواو للرفع).<br>رأيت <b>أباك</b> (الألف للنصب).<br>مررت بـ<b>أبيك</b> (الياء للجر).</div><p>تُعرب بالحروف إذا تحققت شروطها، ومنها أن تكون مفردة ومضافة إلى غير ياء المتكلم.</p><ul><li>الرفع بالواو.</li><li>النصب بالألف.</li><li>الجر بالياء.</li></ul>`},
+badal:{title:"البدل",body:`<p>البدل تابع يوضّح المقصود من اسم قبله، ويأخذ حكمه الإعرابي.</p><h3>مثال</h3><div class="examplebox">حضر أخوك <b>محمدٌ</b>.</div><p>«محمد» بدل مرفوع؛ لأنه تابع للمبدل منه «أخوك» في الإعراب.</p><h3>من أنواعه</h3><ul><li><b>بدل كل من كل:</b> جاء المعلمُ خالدٌ.</li><li><b>بدل بعض من كل:</b> قرأت الكتابَ نصفَه.</li><li><b>بدل اشتمال:</b> أعجبني الطالبُ أدبُه.</li></ul>`},
+naat:{title:"النعت",body:`<p>النعت تابع يصف اسمًا قبله يسمى المنعوت، ويتبعه في الإعراب.</p><h3>مثال</h3><div class="examplebox">قرأتُ كتابًا <b>مفيدًا</b>.</div><p>«مفيدًا» نعت منصوب؛ لأنه يصف «كتابًا» ويتبعه في الإعراب.</p><h3>أنواع النعت</h3><ul><li><b>الحقيقي:</b> يصف المنعوت نفسه، مثل: جاء طالبٌ مجتهدٌ.</li><li><b>السببي:</b> يصف شيئًا مرتبطًا بالمنعوت، مثل: جاء طالبٌ مهذّبٌ خلقُه.</li></ul>`}
+};
+document.querySelectorAll("[data-lesson]").forEach(b=>b.addEventListener("click",()=>{const l=lessons[b.dataset.lesson];document.getElementById("mtitle").textContent=l.title;document.getElementById("mbody").innerHTML=l.body;document.getElementById("modal").hidden=false;document.body.style.overflow="hidden";}));
+function closeModal(){document.getElementById("modal").hidden=true;document.body.style.overflow=""}
+document.getElementById("close").addEventListener("click",closeModal);
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.getElementById("toquiz").addEventListener("click",()=>{closeModal();document.getElementById("quiz").scrollIntoView({behavior:"smooth"})});
+document.getElementById("menu").addEventListener("click",()=>document.getElementById("nav").classList.toggle("open"));
+document.querySelectorAll("nav a").forEach(a=>a.addEventListener("click",()=>document.getElementById("nav").classList.remove("open")));
+const qs=[
+{q:"أيّ الكلمات الآتية ممنوعة من الصرف؟",o:["كتابٌ","أحمدُ","قلمٌ","طالبٌ"],a:1,e:"«أحمد» علم على وزن الفعل، ولذلك يُمنع من الصرف."},
+{q:"تُرفع الأسماء الخمسة بالـ…",o:["الضمة","الألف","الواو","الياء"],a:2,e:"علامة رفع الأسماء الخمسة الواو، مثل: جاء أبوك."},
+{q:"في «قرأت كتابًا مفيدًا»، كلمة «مفيدًا» هي…",o:["فاعل","بدل","نعت","مفعول به"],a:2,e:"«مفيدًا» تصف الكتاب، فهي نعت منصوب."},
+{q:"في «حضر أخوك محمدٌ»، كلمة «محمدٌ» بدلٌ…",o:["مجرور","منصوب","مرفوع","مجزوم"],a:2,e:"«محمدٌ» بدل مرفوع تابع للمبدل منه «أخوك»."}
+];
+let qi=0,score=0,done=false;
+const digits=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+function render(){const q=qs[qi];done=false;document.getElementById("question").textContent=q.q;document.getElementById("count").textContent=`${digits(qi+1)} / ${digits(qs.length)}`;document.getElementById("bar").style.width=((qi+1)/qs.length*100)+"%";document.getElementById("feedback").textContent="";const opts=document.getElementById("options");opts.innerHTML="";q.o.forEach((s,i)=>{let b=document.createElement("button");b.className="option";b.textContent=s;b.onclick=()=>answer(i,b);opts.appendChild(b)});const next=document.getElementById("next");next.disabled=true;next.textContent=qi===qs.length-1?"اعرض النتيجة ↗":"السؤال التالي ←";next.onclick=advance}
+function answer(i,b){if(done)return;done=true;let q=qs[qi];document.querySelectorAll(".option").forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add("correct")});if(i===q.a)score++;else b.classList.add("wrong");document.getElementById("feedback").textContent=(i===q.a?"إجابة صحيحة! ":"راجع التفسير: ")+q.e;document.getElementById("next").disabled=false}
+function advance(){if(!done)return;if(qi<qs.length-1){qi++;render()}else{document.getElementById("question").textContent=`نتيجتك ${digits(score)} من ${digits(qs.length)}`;document.getElementById("options").innerHTML="";document.getElementById("feedback").textContent=score===qs.length?"ممتاز! إجاباتك كلها صحيحة.":"بداية جيدة. راجع الدروس ثم أعد المحاولة.";let b=document.getElementById("next");b.textContent="إعادة الاختبار ↻";b.disabled=false;b.onclick=()=>{qi=0;score=0;render()}}}
+document.getElementById("year").textContent=new Date().getFullYear();render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js").catch(()=>{}));
