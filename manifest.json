@@ -1,0 +1,14 @@
+{
+  "name": "مِعيار - منصة النحو العربي",
+  "short_name": "مِعيار",
+  "description": "شرح مبسط لدروس النحو العربي مع أمثلة واختبارات تفاعلية",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#183b35",
+  "icons": []
+}
